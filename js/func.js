@@ -1,33 +1,48 @@
-// Função principal usada nos eventos
-var func = function(){
-    // Muda a cor de fundo do input
-    $(this).css('background','green');
+$(function(){
 
-    // Mostra o índice do input
-    console.log($(this).index());
-};
+    // =============================
+    // 🔹 ANIMAÇÃO + TIMEOUT
+    // =============================
 
-// Evento keyup
-$('input[name=nome_pessoa]').keyup(func);
+    var timerTimeout;
 
-// Evento keyup para todos inputs de texto
-$('input[type=text]').keyup(func);
+    var executarAnimacaoBox2 = function(){
+        $('.box2').animate({
+            width: '40%',
+            height: '200px',
+            marginLeft: '100px',
+            paddingTop: '50px'
+        }, 2000);
+    };
 
-// Evento keydown
-$('input[type=text]').keydown(func);
+    $('body').click(function(){
+        alert("Timeout cancelado!");
+        clearTimeout(timerTimeout);
 
-// Evento de clique direto
-$('a').click(function(){
-    alert('Olá mundo!');
+        console.log("Timeout cancelado");
+    });
+
+    $('.box1').animate({
+        width: '40%',
+        height: '200px',
+        marginLeft: '100px',
+        paddingTop: '50px'
+    }, 2000, function(){
+        timerTimeout = setTimeout(executarAnimacaoBox2, 3000);
+    });
+
+
+    // =============================
+    // 🔹 INTERVAL
+    // =============================
+
+    var timerInterval = setInterval(function(){
+        console.log("Executando a cada 3 segundos...");
+    }, 3000);
+
+    $('body').click(function(){
+        clearInterval(timerInterval);
+        console.log("Intervalo cancelado");
+    });
+
 });
-
-// Delegação de evento (funciona com elementos criados depois)
-$('body').on('click','a',function(){
-    alert('Olá mundo');
-    return false;
-});
-
-// Criando elemento dinamicamente após 3 segundos
-setTimeout(function(){
-    $('body').html('<a href="#">Meu link!</a>');
-},3000);
